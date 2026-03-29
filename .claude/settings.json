@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(yarn add *)",
+      "Bash(git clone https://github.com/*)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf *)",
+      "Bash(chmod 777 *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(ssh *)",
+      "Bash(nc *)",
+      "Bash(netcat *)",
+      "Bash(git push --force *)",
+      "Bash(npm publish *)",
+      "Bash(osascript *)",
+      "Read(.env*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(~/.ssh/*)",
+      "Read(*.key)",
+      "Read(*.pem)",
+      "Read(**/id_rsa)",
+      "Read(**/id_ed25519)",
+      "Read(~/.aws/*)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.kube/*)",
+      "Read(~/.npmrc)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.netrc)",
+      "Read(~/.bash_history)",
+      "Read(~/.zsh_history)",
+      "Read(**/credentials.json)",
+      "Write(/etc/*)",
+      "Write(/usr/*)",
+      "Write(/bin/*)",
+      "Write(/sbin/*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Grep|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/security-guard.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
